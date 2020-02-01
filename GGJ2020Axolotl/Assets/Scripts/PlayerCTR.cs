@@ -6,13 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerCTR : MonoBehaviour
 {
-    [SerializeField]
-    [Range(0,15)]
-    private float movementSpeed;
+    private float movementSpeed = 20f;
 
-    [SerializeField]
-    [Range(0, 15)]
-    private float jumpForce;
+    private float jumpForce = 5f;
 
     private Rigidbody rb;
 
