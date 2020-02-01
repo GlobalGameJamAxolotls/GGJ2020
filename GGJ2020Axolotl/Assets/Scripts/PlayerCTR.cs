@@ -9,53 +9,101 @@ public class PlayerCTR : MonoBehaviour
     [SerializeField]
     [Range(0,15)]
     private float movementSpeed;
+
     [SerializeField]
     [Range(0, 15)]
     private float jumpForce;
+
     private Rigidbody rb;
-    public bool isjumping;
+
+    private bool _isjumping;
+
+    public InputSystem InputSystem;
+
+    private Vector3 _target;
+
+    [HideInInspector]
+    public bool Move;
+
+    private bool _pressedSomething;
+
+    public bool _check;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        isjumping = false;
+        _isjumping = false;
+        Move = true;
     }
     void Update()
     {
-        Movement();
+        _target = Vector3.zero;
+        _pressedSomething = false;
+
+        if (Input.GetKey(InputSystem.Up))
+        {
+            _target.x++;
+            _pressedSomething = true;
+        }
+
+        if (Input.GetKey(InputSystem.Down))
+        {
+            _target.x--;
+            _pressedSomething = true;
+        }
+
+        if (Input.GetKey(InputSystem.Left))
+        {
+            _target.z++;
+            _pressedSomething = true;
+        }
+
+        if (Input.GetKey(InputSystem.Right))
+        {
+            _target.z--;
+            _pressedSomething = true;
+        }
+
+        if (Move)
+        {
+            Movement();
+        }
+
+        if (_pressedSomething)
+        {
+            Rotation();
+        }
         Jump();
     }
 
 
     void Movement()
     {
+        transform.Translate(_target * movementSpeed * Time.deltaTime, Space.World);
+    }
+
+    private void Rotation()
+    {
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_target), 0.15F);
+
+        if (_target != Vector3.zero)
         {
-            float moveHorizontal = Input.GetAxis("Horizontal"); float moveVertical = Input.GetAxis("Vertical");
-
-            if (moveHorizontal == 0 && moveVertical == 0) return;
-
-            Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical); transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15F);
-
-            if (movement != Vector3.zero)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement.normalized), 0.2f);
-            }
-
-
-            transform.Translate(movement * movementSpeed * Time.deltaTime, Space.World);
-
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_target.normalized), 0.2f);
         }
     }
+
     void Jump()
     {
-        if(Input.GetKey(KeyCode.Space) && isjumping == false) 
+        if(Input.GetKey(KeyCode.Space) && _isjumping == false) 
         {
             rb.AddForce(new Vector3(0, jumpForce, 0),ForceMode.Impulse);
-            isjumping = true;
+            _isjumping = true;
         }            
     }
+
     private void OnCollisionEnter(Collision collision)
     {
-        isjumping = false;
+        _isjumping = false;
     }
 
 }
