@@ -79,10 +79,7 @@ public class ThrowParabola : MonoBehaviour
             GetLine();
         }
 
-        if(Input.GetKeyUp(KeyCode.I))
-        {
-            ThrowObject(thrown);
-        }
+        
     }
     
 
