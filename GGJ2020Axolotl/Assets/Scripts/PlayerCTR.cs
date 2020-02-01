@@ -20,14 +20,12 @@ public class PlayerCTR : MonoBehaviour
 
     public InputSystem InputSystem;
 
-    private Vector3 _target;
+    public Vector3 _target;
 
     [HideInInspector]
     public bool Move;
 
     private bool _pressedSomething;
-
-    public bool _check;
 
     private void Start()
     {
