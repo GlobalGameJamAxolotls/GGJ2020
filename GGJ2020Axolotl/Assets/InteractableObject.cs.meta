@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD:GGJ2020Axolotl/Assets/Scripts/BodyParts/InitialiseBodyParts.cs.meta
-guid: 2dfff5f3fa6c5bb4097086aad37beab0
-=======
-guid: 0cd0cb2281658e14a8a60c066bc6849c
->>>>>>> develop:GGJ2020Axolotl/Assets/InteractableObject.cs.meta
+guid: e94cd521bde9ac243a2c541001fc8398
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
