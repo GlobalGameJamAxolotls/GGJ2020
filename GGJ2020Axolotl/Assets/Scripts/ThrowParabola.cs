@@ -24,16 +24,14 @@ public class ThrowParabola : MonoBehaviour
 
     public float throwSpeed = 1;
 
-
     
-    private void Awake()
-    {
-        
-    }
     void GetLine()
     {
-        lr.positionCount = 21;
-        lr.SetPositions(GetTrajectory().ToArray());
+        List<Vector3> p = GetTrajectory();
+        lr.positionCount = p.Count;
+        lr.SetPositions(p.ToArray());
+        lr.enabled = true;
+        lr.SetPositions(p.ToArray());
     }
 
     Vector3 SetDistance()
@@ -46,13 +44,39 @@ public class ThrowParabola : MonoBehaviour
 
     Tween t;
 
+    private void Start()
+    {
+        Show(20);
+    }
+
     public void ThrowObject(GameObject _go)
     {
         t?.Kill();
+        Rigidbody r = _go.GetComponent<Rigidbody>();
+        r.isKinematic = true;
+        r.useGravity = false;
+        lr.enabled = false;
+        _go.transform.DOLocalPath(GetTrajectory().ToArray(), throwSpeed).OnComplete(()=>
+        {
+            r.isKinematic = false;
+            r.useGravity = true;
+        });
+    }
 
-        _go.transform.DOLocalPath(GetTrajectory().ToArray(), throwSpeed);
-;    }
+    public void Show(float _distance)
+    {
+        Vector3 marker = transform.position + transform.forward * _distance;
+        Ray ray = new Ray(marker, -transform.up);
+        if(Physics.Raycast(ray, out RaycastHit _hit, 50))
+        {
+            Tb.position = _hit.point;
 
+        }
+        
+        distance += _distance;
+        List<Vector3> p = GetTrajectory();       
+    }
+    
 
     public List<Vector3> GetTrajectory()
     {
@@ -63,7 +87,9 @@ public class ThrowParabola : MonoBehaviour
         for (float i = 0; i < count ; i++)
         {
             Vector3 p = SampleParabola(a, b, h, i / count);
+            if(p!=Vector3.zero)
             pos.Add(p);
+
             lastP = p;
         }
         return pos;
@@ -71,15 +97,15 @@ public class ThrowParabola : MonoBehaviour
 
     void Update()
     {
-        if (Ta  && Tb ) {
+        if (Ta  && Tb ) 
+        {
             a = Ta.position; //Get vectors from the transforms
             b = Tb.position;
 
             Tb.position = SetDistance(); 
+          
             GetLine();
-        }
-
-        
+        }        
     }
     
 
