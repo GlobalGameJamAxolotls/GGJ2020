@@ -24,12 +24,7 @@ public class ThrowParabola : MonoBehaviour
 
     public float throwSpeed = 1;
 
-
     
-    private void Awake()
-    {
-        
-    }
     void GetLine()
     {
         lr.positionCount = 21;
@@ -49,10 +44,16 @@ public class ThrowParabola : MonoBehaviour
     public void ThrowObject(GameObject _go)
     {
         t?.Kill();
-
+        lr.enabled = false;
         _go.transform.DOLocalPath(GetTrajectory().ToArray(), throwSpeed);
-;    }
+    }
 
+    public void Show(float _distance)
+    {
+        distance += _distance;
+        lr.enabled = true;
+    }
+    
 
     public List<Vector3> GetTrajectory()
     {
@@ -71,15 +72,15 @@ public class ThrowParabola : MonoBehaviour
 
     void Update()
     {
-        if (Ta  && Tb ) {
+        if (Ta  && Tb ) 
+        {
             a = Ta.position; //Get vectors from the transforms
             b = Tb.position;
 
             Tb.position = SetDistance(); 
+          
             GetLine();
-        }
-
-        
+        }        
     }
     
 
