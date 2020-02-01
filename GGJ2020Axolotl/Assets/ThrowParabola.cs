@@ -17,10 +17,35 @@ public class ThrowParabola : MonoBehaviour
 
     public float distance = 10;
 
-   Vector3 SetDistance()
+    public LineRenderer lr;
+
+    void GetLine()
     {
-        Vector3 dist = Ta.forward * distance;
-        return Ta.position + dist;
+        lr.positionCount = 21;
+        lr.SetPositions(GetTrajectory().ToArray());
+    }
+
+    Vector3 SetDistance()
+    {
+        Vector3 dist = (Ta.forward * distance)+ Ta.position;
+
+        return new Vector3(dist.x, Tb.position.y, dist.z);
+    }
+
+
+    public List<Vector3> GetTrajectory()
+    {
+        float count = 20;
+       
+        Vector3 lastP = a;
+        List<Vector3> pos = new List<Vector3>();
+        for (float i = 0; i < count + 1; i++)
+        {
+            Vector3 p = SampleParabola(a, b, h, i / count);
+            pos.Add(p);
+            lastP = p;
+        }
+        return pos;
     }
 
     void Update()
@@ -29,40 +54,11 @@ public class ThrowParabola : MonoBehaviour
             a = Ta.position; //Get vectors from the transforms
             b = Tb.position;
 
-            if (someObject)
-            {
-                //Shows how to animate something following a parabola
-                objectT = Time.time % 1; //completes the parabola trip in one second
-                someObject.position = SampleParabola(a, b, h, objectT);
-            }
-
-            Tb.position = SetDistance();
-
+            Tb.position = SetDistance(); 
+            GetLine();
         }
     }
-
-
-    void OnDrawGizmos()
-    {
-        //Draw the height in the viewport, so i can make a better gif :]
-        //Handles.BeginGUI();
-        //GUI.skin.box.fontSize = 16;
-        //GUI.Box(new Rect(10, 10, 100, 25), h + "");
-        //Handles.EndGUI();
-
-        //Draw the parabola by sample a few times
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(a, b);
-        float count = 20;
-        Vector3 lastP = a;
-        for (float i = 0; i < count + 1; i++)
-        {
-            Vector3 p = SampleParabola(a, b, h, i / count);
-            Gizmos.color = i % 2 == 0 ? Color.blue : Color.green;
-            Gizmos.DrawLine(lastP, p);
-            lastP = p;
-        }
-    }
+    
 
     #region Parabola sampling function
     /// <summary>
