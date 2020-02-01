@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(Body))]
 public class BodyPartsInputController : MonoBehaviour
 {
-    [SerializeField] private Body _associatedBody;
+    private Body _associatedBody;
 
     [SerializeField] private KeyCode _throwArm;
     [SerializeField] private KeyCode _throwLeg;
@@ -13,7 +12,14 @@ public class BodyPartsInputController : MonoBehaviour
     private KeyCode _currentlyPressed;
 
     private float _pressingDuration;
-    private const float _switchModeThreshold = 2f;
+    private const float _switchModeThreshold = .8f;
+
+    EBodyParts bodyPart;
+
+    private void Awake()
+    {
+        _associatedBody = GetComponent<Body>();
+    }
 
     private void Update()
     {
@@ -21,6 +27,11 @@ public class BodyPartsInputController : MonoBehaviour
 
         if (CurrentPressedChanged())
         {
+            bodyPart = GetBodyPartFromKeyCode(_currentlyPressed);
+            if (_currentlyPressed != KeyCode.None)
+            {
+                _associatedBody.Send(bodyPart);
+            }
             _pressingDuration = 0f;
         }
         else if(_currentlyPressed != KeyCode.None)
@@ -54,5 +65,21 @@ public class BodyPartsInputController : MonoBehaviour
     private bool CurrentPressedChanged()
     {
         return _currentlyPressed != _pressedLastFrame;
+    }
+
+    private EBodyParts GetBodyPartFromKeyCode(KeyCode keyCode)
+    {
+        if(keyCode == _throwArm)
+        {
+            return EBodyParts.ARM;
+        }
+        else if(keyCode == _throwLeg)
+        {
+            return EBodyParts.LEG;
+        }
+        else
+        {
+            return EBodyParts.NONE;
+        }
     }
 }

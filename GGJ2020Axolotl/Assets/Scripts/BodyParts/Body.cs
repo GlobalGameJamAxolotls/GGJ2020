@@ -21,9 +21,15 @@ public class Body : MonoBehaviour
     {
         if (CanRecieve(partToSend.Type))
         {
+            partToSend.transform.parent = transform;
+            partToSend.transform.localPosition = new Vector3(0f, Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+
+            Debug.Log(gameObject.name + " recieving " + partToSend.gameObject.name);
             AddBodyPart(partToSend);
             return true;
         }
+
+        Debug.Log("Cant recieve " + partToSend.gameObject.name);
         return false;
     }
 
@@ -32,6 +38,7 @@ public class Body : MonoBehaviour
         BodyPart toSend = GetFirstBodyPartOfType(typeToSend);
         if (toSend != null && _otherBody.Recieve(toSend))
         {
+            Debug.Log(gameObject.name + " sending " + typeToSend);
             RemoveBodyPart(toSend);
         }
     }
@@ -75,6 +82,7 @@ public class Body : MonoBehaviour
                 Debug.Log("Couldn fint body part.");
                 break;
         }
+        _isHolding = _numberOfArms > 2 || _numberOfLegs > 2;
     }
 
     private int NumberOfLimbs(EBodyParts partType)
