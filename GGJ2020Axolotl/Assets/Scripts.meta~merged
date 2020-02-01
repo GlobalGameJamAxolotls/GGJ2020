@@ -1,9 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 7922f2f26696b7a4fb8f145fba0b9b7f
+=======
 <<<<<<< HEAD:GGJ2020Axolotl/Assets/Materials.meta
 guid: 430dabcdfa3f1d646af839c691a83093
 =======
 guid: 3168729dad7f3c64ba5d46c45535b27d
 >>>>>>> develop:GGJ2020Axolotl/Assets/Scripts.meta
+>>>>>>> develop
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
