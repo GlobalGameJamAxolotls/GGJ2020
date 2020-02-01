@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerCTR : MonoBehaviour
+public class PlayerCTR1 : MonoBehaviour
 {
     [SerializeField]
     [Range(0,15)]
@@ -29,7 +29,7 @@ public class PlayerCTR : MonoBehaviour
     void Movement()
     {
         {
-            float moveHorizontal = Input.GetAxis("Horizontal"); float moveVertical = Input.GetAxis("Vertical");
+            float moveHorizontal = Input.GetAxis("Horizontal2"); float moveVertical = Input.GetAxis("Vertical2");
 
             if (moveHorizontal == 0 && moveVertical == 0) return;
 
@@ -47,7 +47,7 @@ public class PlayerCTR : MonoBehaviour
     }
     void Jump()
     {
-        if(Input.GetKey(KeyCode.Space) && isjumping == false) 
+        if(Input.GetKey(KeyCode.KeypadEnter) && isjumping == false) 
         {
             rb.AddForce(new Vector3(0, jumpForce, 0),ForceMode.Impulse);
             isjumping = true;
