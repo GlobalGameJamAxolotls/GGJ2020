@@ -60,3 +60,4 @@ crashlytics-build.properties
 
 GGJ2020Axolotl/Library/assetDatabase3
 *.log
+*.dll
