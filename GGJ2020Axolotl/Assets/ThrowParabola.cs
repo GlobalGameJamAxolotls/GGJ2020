@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,18 +8,28 @@ public class ThrowParabola : MonoBehaviour
     //need to know the actual enum
     //public enum Part part;
 
-    public Transform someObject; //object that moves along parabola.
     float objectT = 0; //timer for that object
 
     public Transform Ta, Tb; //transforms that mark the start and end
     public float h; //desired parabola height
 
+    public GameObject thrown;
     Vector3 a, b; //Vector positions for start and end
 
     public float distance = 10;
 
     public LineRenderer lr;
 
+    Coroutine throwCo =null;
+
+    public float throwSpeed = 1;
+
+
+    
+    private void Awake()
+    {
+        
+    }
     void GetLine()
     {
         lr.positionCount = 21;
@@ -33,13 +44,23 @@ public class ThrowParabola : MonoBehaviour
     }
 
 
+    Tween t;
+
+    public void ThrowObject(GameObject _go)
+    {
+        t?.Kill();
+
+        _go.transform.DOLocalPath(GetTrajectory().ToArray(), throwSpeed);
+;    }
+
+
     public List<Vector3> GetTrajectory()
     {
         float count = 20;
        
         Vector3 lastP = a;
         List<Vector3> pos = new List<Vector3>();
-        for (float i = 0; i < count + 1; i++)
+        for (float i = 0; i < count ; i++)
         {
             Vector3 p = SampleParabola(a, b, h, i / count);
             pos.Add(p);
@@ -56,6 +77,11 @@ public class ThrowParabola : MonoBehaviour
 
             Tb.position = SetDistance(); 
             GetLine();
+        }
+
+        if(Input.GetKeyUp(KeyCode.I))
+        {
+            ThrowObject(thrown);
         }
     }
     
