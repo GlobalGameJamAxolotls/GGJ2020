@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Body))]
+[RequireComponent(typeof(Body), typeof(PlayerCTR))]
 public class BodyPartsInputController : MonoBehaviour
 {
     private Body _associatedBody;
-
-    [SerializeField] private InputSystem _inputSystem;
-
+    
     private EInputState _currentState;
     private KeyCode _currentlyPressed;
 
@@ -15,14 +13,12 @@ public class BodyPartsInputController : MonoBehaviour
 
     EBodyParts bodyPart;
 
-    private Transform _transformToLookAt;
-    [SerializeField] private GameObject _thingToLookAtPrefab;
-
-
+    private PlayerCTR _playerController;
 
     private void Awake()
     {
         _associatedBody = GetComponent<Body>();
+        _playerController = GetComponent<PlayerCTR>();
     }
 
     private void Update()
@@ -39,18 +35,12 @@ public class BodyPartsInputController : MonoBehaviour
             StartRotating();
         }
 
-        if (_currentState == EInputState.PARABOLE)
-        {
-            transform.LookAt(_transformToLookAt);
-            // Give distance to curve
-        }
-
         // If we start pressing the arm button 
-        if (Input.GetKeyDown(_inputSystem.Arm))
+        if (Input.GetKeyDown(_playerController.InputSystem.Arm))
         {
             // The current state is pressing arm
             _currentState = EInputState.PRESSING_ARM;
-        } else if (Input.GetKeyUp(_inputSystem.Arm)) // If we are releasing the arm button 
+        } else if (Input.GetKeyUp(_playerController.InputSystem.Arm)) // If we are releasing the arm button 
         {
             if(_currentState == EInputState.PARABOLE)
             {
@@ -60,11 +50,11 @@ public class BodyPartsInputController : MonoBehaviour
             _currentState = EInputState.NONE;
         }
 
-        if (Input.GetKeyDown(_inputSystem.Leg))
+        if (Input.GetKeyDown(_playerController.InputSystem.Leg))
         {
             _currentState = EInputState.PRESSING_LEG;
         }
-        else if (Input.GetKeyUp(_inputSystem.Leg))
+        else if (Input.GetKeyUp(_playerController.InputSystem.Leg))
         {
             if (_currentState == EInputState.PARABOLE)
             {
@@ -77,12 +67,12 @@ public class BodyPartsInputController : MonoBehaviour
 
     private KeyCode InterestingKeyPressed()
     {
-        if (Input.GetKey(_inputSystem.Arm))
+        if (Input.GetKey(_playerController.InputSystem.Arm))
         {
-            return _inputSystem.Arm;
-        } else if (Input.GetKey(_inputSystem.Leg))
+            return _playerController.InputSystem.Arm;
+        } else if (Input.GetKey(_playerController.InputSystem.Leg))
         {
-            return _inputSystem.Leg;
+            return _playerController.InputSystem.Leg;
         }
         else
         {
@@ -92,11 +82,11 @@ public class BodyPartsInputController : MonoBehaviour
 
     private EBodyParts GetBodyPartFromKeyCode(KeyCode keyCode)
     {
-        if(keyCode == _inputSystem.Arm)
+        if(keyCode == _playerController.InputSystem.Arm)
         {
             return EBodyParts.ARM;
         }
-        else if(keyCode == _inputSystem.Leg)
+        else if(keyCode == _playerController.InputSystem.Leg)
         {
             return EBodyParts.LEG;
         }
@@ -110,15 +100,14 @@ public class BodyPartsInputController : MonoBehaviour
     {
         // Ask parabole to show
         _currentState = EInputState.PARABOLE;
-        _transformToLookAt = Instantiate(_thingToLookAtPrefab).transform;
-        _transformToLookAt.GetComponent<ToLookAtController>().Init(_inputSystem, transform);
+        _playerController.Move = false;
     }
 
     private void StopRotating()
     {
         // Ask parabole to stop showing and to throw the object
         _currentState = EInputState.NONE;
-        Destroy(_transformToLookAt.gameObject);
+        _playerController.Move = true;
     }
 }
 
