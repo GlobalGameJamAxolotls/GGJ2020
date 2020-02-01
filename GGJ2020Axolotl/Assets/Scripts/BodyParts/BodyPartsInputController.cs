@@ -11,8 +11,6 @@ public class BodyPartsInputController : MonoBehaviour
     private float _pressingDuration;
     private const float _switchModeThreshold = .8f;
 
-    EBodyParts bodyPart;
-
     private PlayerCTR _playerController;
 
     [SerializeField] private ThrowParabola _parabola;
@@ -99,22 +97,6 @@ public class BodyPartsInputController : MonoBehaviour
         else
         {
             return KeyCode.None;
-        }
-    }
-
-    private EBodyParts GetBodyPartFromKeyCode(KeyCode keyCode)
-    {
-        if(keyCode == _playerController.InputSystem.Arm)
-        {
-            return EBodyParts.ARM;
-        }
-        else if(keyCode == _playerController.InputSystem.Leg)
-        {
-            return EBodyParts.LEG;
-        }
-        else
-        {
-            return EBodyParts.NONE;
         }
     }
 

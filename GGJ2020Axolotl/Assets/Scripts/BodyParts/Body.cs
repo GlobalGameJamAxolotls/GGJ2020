@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Body : MonoBehaviour
 {
+    [Tooltip("0: left arm - 1: right arm - 2: left leg - 3: right leg - 4: held arm - 5: held leg")]
     private List<BodyPart> _bodyParts = new List<BodyPart>();
 
     private int _numberOfLegs;
@@ -12,34 +13,33 @@ public class Body : MonoBehaviour
     [SerializeField]
     private Body _otherBody;
 
-    private bool CanRecieve(EBodyParts partToSend)
+    public EBodySide CanRecieve(EBodyLimb partSimplified, List<BodyPart> availableParts)
     {
-        return NumberOfLimbs(partToSend) < 2 || !_isHolding;
-    }
-
-    public bool Recieve(BodyPart partToSend)
-    {
-        if (CanRecieve(partToSend.Type))
+        // if you have an available slot for the given part
+        foreach(BodyPart myBodyPart in _bodyParts)
         {
-            partToSend.transform.parent = transform;
-            partToSend.transform.localPosition = new Vector3(0f, Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-
-            //Debug.Log(gameObject.name + " recieving " + partToSend.gameObject.name);
-            AddBodyPart(partToSend);
-            return true;
+            if(myBodyPart.Part == partSimplified && !myBodyPart.IsVisible)
+            {
+                BodyPart matchingPart = BrowseMatchingPart(myBodyPart.Side);
+                if (matchingPart != null)
+                {
+                    matchingPart.AttachToBody(this);
+                    return myBodyPart.Side;
+                }
+            }
         }
+        return EBodySide.NONE;
 
-        Debug.Log("Cant recieve " + partToSend.gameObject.name);
-        return false;
-    }
-
-    public void Send(EBodyParts typeToSend)
-    {
-        BodyPart toSend = GetFirstBodyPartOfType(typeToSend);
-        if (toSend != null && _otherBody.Recieve(toSend))
+        BodyPart BrowseMatchingPart(EBodySide side)
         {
-            //Debug.Log(gameObject.name + " sending " + typeToSend);
-            RemoveBodyPart(toSend);
+            foreach(BodyPart availablePart in availableParts)
+            {
+                if(availablePart.Side == side)
+                {
+                    return availablePart;
+                }
+            }
+            return null;
         }
     }
 
@@ -55,7 +55,7 @@ public class Body : MonoBehaviour
         _bodyParts.Remove(toRemove);
     }
 
-    private BodyPart GetFirstBodyPartOfType(EBodyParts toRemove)
+    private BodyPart GetFirstBodyPartOfType(EBodyPartsPrecise toRemove)
     {
         foreach (BodyPart part in _bodyParts)
         {
@@ -68,34 +68,32 @@ public class Body : MonoBehaviour
         return null;
     }
 
-    private void ModifyNumberOfParts(EBodyParts partType, int modifier)
+    private void ModifyNumberOfParts(EBodyLimb partType, int modifier)
     {
-        switch (partType)
+        if (partType == EBodyLimb.ARM)
         {
-            case EBodyParts.ARM:
-                _numberOfArms += modifier;
-                break;
-            case EBodyParts.LEG:
-                _numberOfLegs += modifier;
-                break;
-            default:
-                Debug.Log("Couldn fint body part.");
-                break;
+            _numberOfArms += modifier;
+        } else if (partType == EBodyLimb.LEG)
+        {
+            _numberOfLegs += modifier;
+        }
+        else
+        {
+            Debug.Log("Couldn fint body part.");
         }
         _isHolding = _numberOfArms > 2 || _numberOfLegs > 2;
     }
 
-    private int NumberOfLimbs(EBodyParts partType)
+    private int NumberOfLimbs(EBodyLimb partType)
     {
-        switch (partType)
+        if (partType == EBodyLimb.ARM)
         {
-            case EBodyParts.LEG:
-                return _numberOfLegs;
-            case EBodyParts.ARM:
-                return _numberOfArms;
-            default:
-                Debug.Log("Couldnt find body part " + partType + ". Returning 0");
-                return 0;
+            return _numberOfArms;
+        } else if (partType == EBodyLimb.LEG)
+        {
+            return _numberOfLegs;
         }
+        Debug.Log("Couldnt find body part " + partType + ". Returning 0");
+        return 0;
     }
 }

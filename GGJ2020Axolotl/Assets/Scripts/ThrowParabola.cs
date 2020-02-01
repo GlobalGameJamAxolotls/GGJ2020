@@ -70,7 +70,6 @@ public class ThrowParabola : MonoBehaviour
         if(Physics.Raycast(ray, out RaycastHit _hit, 50))
         {
             Tb.position = _hit.point;
-
         }
         
         distance += _distance;
