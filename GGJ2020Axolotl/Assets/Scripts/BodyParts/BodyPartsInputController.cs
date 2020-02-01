@@ -15,10 +15,17 @@ public class BodyPartsInputController : MonoBehaviour
 
     private PlayerCTR _playerController;
 
+    [SerializeField] private ThrowParabola _parabola;
+
+    private float _distance;
+    private float _speedDistance = 1f;
+    private const float DISTANCE_RESET_VALUE = 1.5f;
+
     private void Awake()
     {
         _associatedBody = GetComponent<Body>();
         _playerController = GetComponent<PlayerCTR>();
+        _distance = DISTANCE_RESET_VALUE;
     }
 
     private void Update()
@@ -29,8 +36,23 @@ public class BodyPartsInputController : MonoBehaviour
             _pressingDuration += Time.deltaTime;
         }
 
+        if (_currentState == EInputState.PARABOLE)
+        {
+            if (Input.GetKeyDown(_playerController.InputSystem.Up))
+            {
+                _distance += _speedDistance * Time.deltaTime;
+                _parabola.Show(_distance);
+            }
+            else if (Input.GetKeyDown(_playerController.InputSystem.Down))
+            {
+                _distance -= _speedDistance * Time.deltaTime;
+                _parabola.Show(_distance);
+            }
+
+        }
+
         // If we have been pressing for long enough to trigger the parabole mode
-        if(_pressingDuration >= _switchModeThreshold && _currentState != EInputState.PARABOLE)
+        if (_pressingDuration >= _switchModeThreshold && _currentState != EInputState.PARABOLE)
         {
             StartRotating();
         }
@@ -108,6 +130,7 @@ public class BodyPartsInputController : MonoBehaviour
         // Ask parabole to stop showing and to throw the object
         _currentState = EInputState.NONE;
         _playerController.Move = true;
+        _distance = DISTANCE_RESET_VALUE;
     }
 }
 
