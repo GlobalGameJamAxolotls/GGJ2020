@@ -5,16 +5,20 @@ public class BodyPartsInputController : MonoBehaviour
 {
     private Body _associatedBody;
 
-    [SerializeField] private KeyCode _throwArm;
-    [SerializeField] private KeyCode _throwLeg;
+    [SerializeField] private InputSystem _inputSystem;
 
-    private KeyCode _pressedLastFrame;
+    private EInputState _currentState;
     private KeyCode _currentlyPressed;
 
     private float _pressingDuration;
     private const float _switchModeThreshold = .8f;
 
     EBodyParts bodyPart;
+
+    private Transform _transformToLookAt;
+    [SerializeField] private GameObject _thingToLookAtPrefab;
+
+
 
     private void Awake()
     {
@@ -23,38 +27,62 @@ public class BodyPartsInputController : MonoBehaviour
 
     private void Update()
     {
-        _currentlyPressed = InterestingKeyPressed();
-
-        if (CurrentPressedChanged())
-        {
-            bodyPart = GetBodyPartFromKeyCode(_currentlyPressed);
-            if (_currentlyPressed != KeyCode.None)
-            {
-                _associatedBody.Send(bodyPart);
-            }
-            _pressingDuration = 0f;
-        }
-        else if(_currentlyPressed != KeyCode.None)
+        // If we are already pressing, we add the length of the current frame
+        if (_currentState.ToString().Contains("PRESSING"))
         {
             _pressingDuration += Time.deltaTime;
         }
 
-        if(_pressingDuration >= _switchModeThreshold)
+        // If we have been pressing for long enough to trigger the parabole mode
+        if(_pressingDuration >= _switchModeThreshold && _currentState != EInputState.PARABOLE)
         {
-            Debug.Log("Target mode");
+            StartRotating();
         }
 
-        _pressedLastFrame = _currentlyPressed;
+        if (_currentState == EInputState.PARABOLE)
+        {
+            transform.LookAt(_transformToLookAt);
+            // Give distance to curve
+        }
+
+        // If we start pressing the arm button 
+        if (Input.GetKeyDown(_inputSystem.Arm))
+        {
+            // The current state is pressing arm
+            _currentState = EInputState.PRESSING_ARM;
+        } else if (Input.GetKeyUp(_inputSystem.Arm)) // If we are releasing the arm button 
+        {
+            if(_currentState == EInputState.PARABOLE)
+            {
+                StopRotating();
+            }
+            _pressingDuration = 0f;
+            _currentState = EInputState.NONE;
+        }
+
+        if (Input.GetKeyDown(_inputSystem.Leg))
+        {
+            _currentState = EInputState.PRESSING_LEG;
+        }
+        else if (Input.GetKeyUp(_inputSystem.Leg))
+        {
+            if (_currentState == EInputState.PARABOLE)
+            {
+                StopRotating();
+            }
+            _pressingDuration = 0f;
+            _currentState = EInputState.NONE;
+        }
     }
 
     private KeyCode InterestingKeyPressed()
     {
-        if (Input.GetKey(_throwArm))
+        if (Input.GetKey(_inputSystem.Arm))
         {
-            return _throwArm;
-        } else if (Input.GetKey(_throwLeg))
+            return _inputSystem.Arm;
+        } else if (Input.GetKey(_inputSystem.Leg))
         {
-            return _throwLeg;
+            return _inputSystem.Leg;
         }
         else
         {
@@ -62,18 +90,13 @@ public class BodyPartsInputController : MonoBehaviour
         }
     }
 
-    private bool CurrentPressedChanged()
-    {
-        return _currentlyPressed != _pressedLastFrame;
-    }
-
     private EBodyParts GetBodyPartFromKeyCode(KeyCode keyCode)
     {
-        if(keyCode == _throwArm)
+        if(keyCode == _inputSystem.Arm)
         {
             return EBodyParts.ARM;
         }
-        else if(keyCode == _throwLeg)
+        else if(keyCode == _inputSystem.Leg)
         {
             return EBodyParts.LEG;
         }
@@ -82,4 +105,27 @@ public class BodyPartsInputController : MonoBehaviour
             return EBodyParts.NONE;
         }
     }
+
+    private void StartRotating()
+    {
+        // Ask parabole to show
+        _currentState = EInputState.PARABOLE;
+        _transformToLookAt = Instantiate(_thingToLookAtPrefab).transform;
+        _transformToLookAt.GetComponent<ToLookAtController>().Init(_inputSystem, transform);
+    }
+
+    private void StopRotating()
+    {
+        // Ask parabole to stop showing and to throw the object
+        _currentState = EInputState.NONE;
+        Destroy(_transformToLookAt.gameObject);
+    }
+}
+
+public enum EInputState
+{
+    NONE,
+    PRESSING_LEG,
+    PRESSING_ARM,
+    PARABOLE
 }

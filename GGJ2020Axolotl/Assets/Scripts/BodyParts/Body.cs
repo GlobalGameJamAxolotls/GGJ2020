@@ -24,7 +24,7 @@ public class Body : MonoBehaviour
             partToSend.transform.parent = transform;
             partToSend.transform.localPosition = new Vector3(0f, Random.Range(-1f, 1f), Random.Range(-1f, 1f));
 
-            Debug.Log(gameObject.name + " recieving " + partToSend.gameObject.name);
+            //Debug.Log(gameObject.name + " recieving " + partToSend.gameObject.name);
             AddBodyPart(partToSend);
             return true;
         }
@@ -38,7 +38,7 @@ public class Body : MonoBehaviour
         BodyPart toSend = GetFirstBodyPartOfType(typeToSend);
         if (toSend != null && _otherBody.Recieve(toSend))
         {
-            Debug.Log(gameObject.name + " sending " + typeToSend);
+            //Debug.Log(gameObject.name + " sending " + typeToSend);
             RemoveBodyPart(toSend);
         }
     }
