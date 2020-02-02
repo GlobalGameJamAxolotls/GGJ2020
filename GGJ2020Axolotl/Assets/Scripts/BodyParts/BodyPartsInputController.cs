@@ -5,7 +5,7 @@ public class BodyPartsInputController : MonoBehaviour
 {
     private Body _associatedBody;
     
-    private EInputState _currentState;
+    private EInputState _currentState = EInputState.NONE;
     private KeyCode _currentlyPressed;
 
     private float _pressingDuration;
@@ -33,7 +33,7 @@ public class BodyPartsInputController : MonoBehaviour
         {
             _pressingDuration += Time.deltaTime;
         }
-
+       
         if (_currentState == EInputState.PARABOLE)
         {
             if (Input.GetKey(_playerController.InputSystem.Up))
@@ -64,6 +64,7 @@ public class BodyPartsInputController : MonoBehaviour
         else if (Input.GetKeyUp(_playerController.InputSystem.Arm)) // If we are releasing the arm button 
         {
             StopRotating(EBodyLimb.ARM, _currentState == EInputState.PARABOLE);
+            
         }
 
         if (Input.GetKeyDown(_playerController.InputSystem.Leg))

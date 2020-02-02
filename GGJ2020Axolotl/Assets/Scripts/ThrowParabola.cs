@@ -52,6 +52,10 @@ public class ThrowParabola : MonoBehaviour
 
     public void ThrowObject(GameObject _go)
     {
+        if(_go == null)
+            {
+            lr.gameObject.SetActive(false);
+        }
         t?.Kill();
         Rigidbody r = _go.GetComponent<Rigidbody>();
         r.isKinematic = true;
@@ -111,14 +115,7 @@ public class ThrowParabola : MonoBehaviour
             GetLine();
         }        
 
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            Show(20);
-        }
-        if(Input.GetKeyUp(KeyCode.C))
-        {
-            ThrowObject(thrown);
-        }
+       
     }
     
 
