@@ -1,0 +1,60 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+[RequireComponent(typeof(Rigidbody))]
+public class PlayerCTR : MonoBehaviour
+{
+    [SerializeField]
+    [Range(0,15)]
+    private float movementSpeed;
+    [SerializeField]
+    [Range(0, 15)]
+    private float jumpForce;
+    private Rigidbody rb;
+    public bool isjumping;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        isjumping = false;
+    }
+    void Update()
+    {
+        Movement();
+        Jump();
+    }
+
+
+    void Movement()
+    {
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal"); float moveVertical = Input.GetAxis("Vertical");
+
+            if (moveHorizontal == 0 && moveVertical == 0) return;
+
+            Vector3 movement = new Vector3(moveHorizontal, 0f, moveVertical); transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15F);
+
+            if (movement != Vector3.zero)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement.normalized), 0.2f);
+            }
+
+
+            transform.Translate(movement * movementSpeed * Time.deltaTime, Space.World);
+
+        }
+    }
+    void Jump()
+    {
+        if(Input.GetKey(KeyCode.Space) && isjumping == false) {
+            rb.AddForce(new Vector3(0, jumpForce, 0),ForceMode.Impulse);
+            isjumping = true;
+        }            
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        isjumping = false;
+    }
+
+}
