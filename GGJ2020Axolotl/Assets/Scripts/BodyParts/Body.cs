@@ -13,7 +13,7 @@ public class Body : MonoBehaviour
     [SerializeField]
     private Body _otherBody;
 
-    public EBodySide CanRecieve(EBodyLimb partSimplified, List<BodyPart> availableParts)
+    public BodyPart TryRecieve(EBodyLimb partSimplified, List<EBodySide> availableParts)
     {
         // if you have an available slot for the given part
         foreach(BodyPart myBodyPart in _bodyParts)
@@ -21,45 +21,67 @@ public class Body : MonoBehaviour
             if(myBodyPart.Part == partSimplified && !myBodyPart.IsVisible)
             {
                 BodyPart matchingPart = BrowseMatchingPart(myBodyPart.Side);
-                if (matchingPart != null)
+                if (matchingPart != EBodySide.NONE)
                 {
-                    matchingPart.AttachToBody(this);
-                    return myBodyPart.Side;
+                    return matchingPart;
                 }
             }
         }
-        return EBodySide.NONE;
+        return null;
 
         BodyPart BrowseMatchingPart(EBodySide side)
         {
-            foreach(BodyPart availablePart in availableParts)
+            foreach(EBodySide availablePart in availableParts)
             {
-                if(availablePart.Side == side)
+                if(availablePart == side)
                 {
-                    return availablePart;
+                    return myB;
                 }
             }
-            return null;
+            return EBodySide.NONE;
+        }
+    }
+
+    public void Send(EBodyLimb part)
+    {
+        if (NumberOfLimbs(part) > 0)
+        {
+            // Make the list of body parts matching the value of part
+            List<EBodySide> availableSides = new List<EBodySide>();
+            foreach (BodyPart bodyPart in _bodyParts)
+            {
+                if (bodyPart.Part == part)
+                {
+                    availableSides.Add(bodyPart.Side);
+                }
+            }
+            // Try to send it
+            EBodySide chosenSide = _otherBody.TryRecieve(part, availableSides);
+            if(chosenSide != EBodySide.NONE)
+            {
+
+            }
+            // If the result is different from null then break the reference in the 
         }
     }
 
     private void AddBodyPart(BodyPart part)
     {
         _bodyParts.Add(part);
-        ModifyNumberOfParts(part.Type, 1);
+        ModifyNumberOfParts(part.Part, 1);
     }
 
     private void RemoveBodyPart(BodyPart toRemove)
     {
-        ModifyNumberOfParts(toRemove.Type, -1);
+        ModifyNumberOfParts(toRemove.Part, -1);
         _bodyParts.Remove(toRemove);
     }
 
-    private BodyPart GetFirstBodyPartOfType(EBodyPartsPrecise toRemove)
+    private BodyPart GetFirstBodyPartOfType(EBodyLimb toRemove)
     {
         foreach (BodyPart part in _bodyParts)
         {
-            if (part.Type == toRemove)
+            if (part.Part == toRemove)
             {
                 return part;
             }

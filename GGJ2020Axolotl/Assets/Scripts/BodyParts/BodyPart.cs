@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BodyPart : MonoBehaviour
 {
     public EBodyLimb Part;
     public EBodySide Side;
+    public EAxolotl Axolotl;
 
     private bool isVisible;
 
@@ -21,4 +20,11 @@ public class BodyPart : MonoBehaviour
     {
         transform.parent = body.transform;
     }
+}
+
+public enum EAxolotl
+{
+    NONE, 
+    ANGRY,
+    SAD
 }
