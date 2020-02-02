@@ -3,7 +3,27 @@ guid: 36201d4ee9a3d1746bbb0d59c7ac6df0
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RED_ENV
+    second: {fileID: 2100000, guid: a511ad5305f260846851986b452b5182, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: STEEL_DARK
+    second: {fileID: 2100000, guid: 26beff95843a2e0419664a922812bb46, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: STEEL_LIGHT
+    second: {fileID: 2100000, guid: 23b7c5318c8a81a4b84283cc4f417312, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: 4b6fe0923d2509a418c68f3ebd7c8b4b, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

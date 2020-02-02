@@ -17,7 +17,8 @@ public class Lever : InteractableObject
     protected override void Interaction(GameObject _go)
     {
         interactable = false;
-        lever.transform.DOLocalRotate(new Vector3(90, 0, 0), 0.5f);
+
+        lever.transform.DOLocalRotate(new Vector3(90, 0, 0), 0.5f).OnComplete(()=> { SoundManager.instance.PlaySound(sounds.SwitchA); });
     }
 
     //public void Reset()

@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DG.Tweening;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerCTR : MonoBehaviour
@@ -18,6 +19,8 @@ public class PlayerCTR : MonoBehaviour
 
     public Vector3 _target;
 
+    public sounds sound;
+
     [HideInInspector]
     public bool Move;
 
@@ -27,6 +30,7 @@ public class PlayerCTR : MonoBehaviour
 
     private void Awake()
     {
+       
         anim = GetComponent<Animator>();
     }
     private void Start()
@@ -81,8 +85,18 @@ public class PlayerCTR : MonoBehaviour
     {
         float moveHorizontal = Input.GetAxis(InputSystem.HorizontalAxis); float moveVertical = Input.GetAxis(InputSystem.VerticalAxis);
         Vector3 move = new Vector3(moveHorizontal, 0, moveVertical);
+
         anim?.SetBool("Walking", move != Vector3.zero);
 
+        if(move!=Vector3.zero)
+        {
+            SoundManager.instance.PlaySound(sound);
+        }
+        else
+        {
+            SoundManager.instance.StopSounds(sound);
+            
+        }
         if (moveHorizontal == 0 && moveVertical == 0) return;
 
         Vector3 movement = new Vector3(-moveHorizontal, 0f, -moveVertical); transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15F);
