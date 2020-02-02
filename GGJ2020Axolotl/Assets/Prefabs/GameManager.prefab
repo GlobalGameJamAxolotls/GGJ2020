@@ -1296,7 +1296,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1822718157481153364
 CapsuleCollider:
@@ -1326,6 +1326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputSystem: {fileID: 11400000, guid: a7879199076d15c438d29b7780b2e154, type: 2}
   _target: {x: 0, y: 0, z: 0}
+  sound: 0
   Move: 0
 --- !u!114 &1822718157481153365
 MonoBehaviour:
@@ -3807,6 +3808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputSystem: {fileID: 11400000, guid: 73382c2841704854a907f3f036835332, type: 2}
   _target: {x: 0, y: 0, z: 0}
+  sound: 0
   Move: 0
 --- !u!114 &7668070611202048025
 MonoBehaviour:
@@ -4458,6 +4460,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PickableLimbPrefab: {fileID: 1205005223923303689, guid: e11c19575a5fa4b038c947dc574e185d,
     type: 3}
+  _angryPrefabs: []
+  _sadPrefabs: []
 --- !u!114 &422452827
 MonoBehaviour:
   m_ObjectHideFlags: 0
