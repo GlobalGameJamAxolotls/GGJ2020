@@ -1,8 +1,6 @@
-﻿
-public enum EBodyParts
+﻿public enum EBodyLimb
 {
     NONE,
     ARM,
     LEG
-
 }

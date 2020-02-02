@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class Body : MonoBehaviour
 {
-    private List<BodyPart> _bodyParts = new List<BodyPart>();
+    [Tooltip("0: left arm - 1: right arm - 2: left leg - 3: right leg - 4: held arm - 5: held leg")]
+    [SerializeField]
+    private List<BodyPartSlot> _bodyParts = new List<BodyPartSlot>();
 
     private int _numberOfLegs;
     private int _numberOfArms;
@@ -12,90 +14,84 @@ public class Body : MonoBehaviour
     [SerializeField]
     private Body _otherBody;
 
-    private bool CanRecieve(EBodyParts partToSend)
+    public bool TryRecieve(EBodyLimb partSimplified, EAxolotl color)
     {
-        return NumberOfLimbs(partToSend) < 2 || !_isHolding;
-    }
-
-    public bool Recieve(BodyPart partToSend)
-    {
-        if (CanRecieve(partToSend.Type))
+        // if you have an available slot for the given part
+        for (int i = 0; i < _bodyParts.Count; i++)
         {
-            partToSend.transform.parent = transform;
-            partToSend.transform.localPosition = new Vector3(0f, Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-
-            //Debug.Log(gameObject.name + " recieving " + partToSend.gameObject.name);
-            AddBodyPart(partToSend);
-            return true;
+            var combination = BodyPartsHelper.GetPairFromInt(i);
+            if (combination.Limb == partSimplified && !_bodyParts[i].IsVisible)
+            {
+                // Instantiate body part with same axolotl as available part but with my side 
+                ShowBodyPart(partSimplified, combination.Side, color);
+                return true;
+            }
         }
-
-        Debug.Log("Cant recieve " + partToSend.gameObject.name);
         return false;
     }
 
-    public void Send(EBodyParts typeToSend)
+    public void Send(EBodyLimb part)
     {
-        BodyPart toSend = GetFirstBodyPartOfType(typeToSend);
-        if (toSend != null && _otherBody.Recieve(toSend))
+        if (NumberOfLimbs(part) > 0)
         {
-            //Debug.Log(gameObject.name + " sending " + typeToSend);
-            RemoveBodyPart(toSend);
-        }
-    }
+            // Make the list of body parts matching the value of part
+            BodyPartSlot availablePart = null;
 
-    private void AddBodyPart(BodyPart part)
-    {
-        _bodyParts.Add(part);
-        ModifyNumberOfParts(part.Type, 1);
-    }
-
-    private void RemoveBodyPart(BodyPart toRemove)
-    {
-        ModifyNumberOfParts(toRemove.Type, -1);
-        _bodyParts.Remove(toRemove);
-    }
-
-    private BodyPart GetFirstBodyPartOfType(EBodyParts toRemove)
-    {
-        foreach (BodyPart part in _bodyParts)
-        {
-            if (part.Type == toRemove)
+            for (int i = 0; i < _bodyParts.Count; i++)
             {
-                return part;
+                var combination = BodyPartsHelper.GetPairFromInt(i);
+                if (combination.Limb == part && _bodyParts[i].IsVisible)
+                {
+                    if(_otherBody.TryRecieve(combination.Limb, _bodyParts[i].Axolotl))
+                    {
+                        RemoveBodyPart(combination.Limb, combination.Side);
+                        break;
+                    }
+                }
             }
+            // If the result is different from null then break the reference in the 
         }
-        Debug.Log("Couldnt find body part. Returning null");
-        return null;
     }
 
-    private void ModifyNumberOfParts(EBodyParts partType, int modifier)
+    private void ShowBodyPart(EBodyLimb limb, EBodySide side, EAxolotl color)
     {
-        switch (partType)
+        ModifyNumberOfParts(limb, 1);
+
+        _bodyParts[BodyPartsHelper.GetIntFromPair(limb, side)].Show(limb, side, color);
+    }
+
+    private void RemoveBodyPart(EBodyLimb limb, EBodySide side)
+    {
+        ModifyNumberOfParts(limb, -1);
+        _bodyParts[BodyPartsHelper.GetIntFromPair(limb, side)].Hide();
+    }
+
+    private void ModifyNumberOfParts(EBodyLimb partType, int modifier)
+    {
+        if (partType == EBodyLimb.ARM)
         {
-            case EBodyParts.ARM:
-                _numberOfArms += modifier;
-                break;
-            case EBodyParts.LEG:
-                _numberOfLegs += modifier;
-                break;
-            default:
-                Debug.Log("Couldn fint body part.");
-                break;
+            _numberOfArms += modifier;
+        } else if (partType == EBodyLimb.LEG)
+        {
+            _numberOfLegs += modifier;
+        }
+        else
+        {
+            Debug.Log("Couldn fint body part.");
         }
         _isHolding = _numberOfArms > 2 || _numberOfLegs > 2;
     }
 
-    private int NumberOfLimbs(EBodyParts partType)
+    private int NumberOfLimbs(EBodyLimb partType)
     {
-        switch (partType)
+        if (partType == EBodyLimb.ARM)
         {
-            case EBodyParts.LEG:
-                return _numberOfLegs;
-            case EBodyParts.ARM:
-                return _numberOfArms;
-            default:
-                Debug.Log("Couldnt find body part " + partType + ". Returning 0");
-                return 0;
+            return _numberOfArms;
+        } else if (partType == EBodyLimb.LEG)
+        {
+            return _numberOfLegs;
         }
+        Debug.Log("Couldnt find body part " + partType + ". Returning 0");
+        return 0;
     }
 }
