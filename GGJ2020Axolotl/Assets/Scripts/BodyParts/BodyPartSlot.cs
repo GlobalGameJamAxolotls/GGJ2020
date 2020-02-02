@@ -5,7 +5,7 @@ public class BodyPartSlot : MonoBehaviour
     [HideInInspector]
     public EAxolotl Axolotl;
 
-    private MeshRenderer _associatedLimb;
+    private SkinnedMeshRenderer _associatedLimb;
 
     private bool isVisible;
 
@@ -15,7 +15,7 @@ public class BodyPartSlot : MonoBehaviour
     {
         if(_associatedLimb == null)
         {
-            _associatedLimb = transform.GetChild(0).GetComponent<MeshRenderer>();
+            _associatedLimb = GetComponent<SkinnedMeshRenderer>();
         }
         Axolotl = color;
         _associatedLimb.materials = BodyPartsMaterialsHolder.GetListForAxolotl(color);
