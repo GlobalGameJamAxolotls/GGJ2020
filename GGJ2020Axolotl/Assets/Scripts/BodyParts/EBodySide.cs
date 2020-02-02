@@ -2,6 +2,6 @@
 {
     NONE,
     LEFT,
-    RIGHT,
-    HELD
+    RIGHT
+    //HELD
 }

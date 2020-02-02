@@ -4,6 +4,7 @@ using UnityEngine;
 public class Body : MonoBehaviour
 {
     [Tooltip("0: left arm - 1: right arm - 2: left leg - 3: right leg - 4: held arm - 5: held leg")]
+    [SerializeField]
     private List<BodyPartSlot> _bodyParts = new List<BodyPartSlot>();
 
     private int _numberOfLegs;
@@ -22,7 +23,7 @@ public class Body : MonoBehaviour
             if (combination.Limb == partSimplified && !_bodyParts[i].IsVisible)
             {
                 // Instantiate body part with same axolotl as available part but with my side 
-                InstantiateBodyPart(partSimplified, combination.Side, color);
+                ShowBodyPart(partSimplified, combination.Side, color);
                 return true;
             }
         }
@@ -52,17 +53,17 @@ public class Body : MonoBehaviour
         }
     }
 
-    private void InstantiateBodyPart(EBodyLimb limb, EBodySide side, EAxolotl color)
+    private void ShowBodyPart(EBodyLimb limb, EBodySide side, EAxolotl color)
     {
         ModifyNumberOfParts(limb, 1);
 
-        _bodyParts[BodyPartsHelper.GetIntFromPair(limb, side)].CreateGameObject(limb, side, color);
+        _bodyParts[BodyPartsHelper.GetIntFromPair(limb, side)].Show(limb, side, color);
     }
 
     private void RemoveBodyPart(EBodyLimb limb, EBodySide side)
     {
         ModifyNumberOfParts(limb, -1);
-        _bodyParts[BodyPartsHelper.GetIntFromPair(limb, side)].DestroyGameObject();
+        _bodyParts[BodyPartsHelper.GetIntFromPair(limb, side)].Hide();
     }
 
     private void ModifyNumberOfParts(EBodyLimb partType, int modifier)

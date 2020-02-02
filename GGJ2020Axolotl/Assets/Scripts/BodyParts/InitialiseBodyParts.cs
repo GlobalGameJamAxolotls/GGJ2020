@@ -7,7 +7,7 @@ public class InitialiseBodyParts : MonoBehaviour
     [SerializeField] private Body _angry;
     [SerializeField] private Body _sad;
 
-    private void Awake()
+    private void Start()
     {
         _angry.TryRecieve(EBodyLimb.ARM, EAxolotl.ANGRY);
         _angry.TryRecieve(EBodyLimb.ARM, EAxolotl.ANGRY);

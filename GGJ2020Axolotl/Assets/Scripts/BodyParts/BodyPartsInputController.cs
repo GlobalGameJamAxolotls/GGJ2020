@@ -68,6 +68,7 @@ public class BodyPartsInputController : MonoBehaviour
             }
             _pressingDuration = 0f;
             _currentState = EInputState.NONE;
+            _associatedBody.Send(EBodyLimb.ARM);
         }
 
         if (Input.GetKeyDown(_playerController.InputSystem.Leg))
@@ -82,6 +83,7 @@ public class BodyPartsInputController : MonoBehaviour
             }
             _pressingDuration = 0f;
             _currentState = EInputState.NONE;
+            _associatedBody.Send(EBodyLimb.LEG);
         }
     }
 

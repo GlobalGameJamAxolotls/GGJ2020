@@ -4,27 +4,29 @@ public class BodyPartSlot : MonoBehaviour
 {
     public EAxolotl Axolotl;
 
-    private GameObject _associatedGO;
+    private MeshRenderer _associatedLimb;
 
     private bool isVisible;
 
     public bool IsVisible { get => isVisible; }
 
-    public void Switch()
+    public void Show(EBodyLimb limb, EBodySide side, EAxolotl color)
     {
-        isVisible = !isVisible;
-        gameObject.SetActive(isVisible);
+        if(_associatedLimb == null)
+        {
+            _associatedLimb = transform.GetChild(0).GetComponent<MeshRenderer>();
+        }
+        Axolotl = color;
+        _associatedLimb.materials = BodyPartsMaterialsHolder.GetListForAxolotl(color);
+        isVisible = true;
+        gameObject.SetActive(true);
     }
 
-    public void CreateGameObject(EBodyLimb limb, EBodySide side, EAxolotl color)
-    {
-        _associatedGO = Instantiate(BodyPartsPrefabHolder.GetPrefab(limb, side, color));
-    }
-
-    public void DestroyGameObject()
+    public void Hide()
     {
         Axolotl = EAxolotl.NONE;
-        Destroy(_associatedGO);
+        isVisible = false;
+        gameObject.SetActive(false);
     }
 }
 
