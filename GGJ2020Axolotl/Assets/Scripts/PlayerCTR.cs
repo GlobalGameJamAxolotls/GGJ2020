@@ -20,6 +20,7 @@ public class PlayerCTR : MonoBehaviour
     public Vector3 _target;
 
     public sounds sound;
+    public sounds jumpsound;
 
     [HideInInspector]
     public bool Move;
@@ -88,14 +89,17 @@ public class PlayerCTR : MonoBehaviour
 
         anim?.SetBool("Walking", move != Vector3.zero);
 
-        if(move!=Vector3.zero)
+        if (!_isjumping)
         {
-            SoundManager.instance.PlaySound(sound);
-        }
-        else
-        {
-            SoundManager.instance.StopSounds(sound);
-            
+            if (move != Vector3.zero)
+            {
+                SoundManager.instance.PlaySound(sound);
+            }
+            else
+            {
+                SoundManager.instance.StopSounds(sound);
+
+            }
         }
         if (moveHorizontal == 0 && moveVertical == 0) return;
 
@@ -130,6 +134,7 @@ public class PlayerCTR : MonoBehaviour
         {
             rb.AddForce(new Vector3(0, jumpForce, 0),ForceMode.Impulse);
             _isjumping = true;
+            SoundManager.instance.PlaySound(jumpsound);
         }            
     }
 

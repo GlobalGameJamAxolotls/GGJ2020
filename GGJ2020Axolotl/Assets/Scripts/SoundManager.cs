@@ -50,7 +50,7 @@ public class SoundManager : MonoBehaviour
 public enum sounds
 {
     footstepsA = 0,
-    footstepsB        ,
+    footstepsB,
     SwitchA,
     SwitchB,
     JumpA,

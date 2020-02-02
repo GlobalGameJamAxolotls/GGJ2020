@@ -2504,7 +2504,7 @@ AudioSource:
   m_GameObject: {fileID: 1848002114}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 5754353033535840570, guid: 849e9089c9fd3304c8e7f4d0dbcab2fb,
+  OutputAudioMixerGroup: {fileID: -2920768119992413460, guid: 849e9089c9fd3304c8e7f4d0dbcab2fb,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 586dbd186c3292f4c84d827ad1c210ed, type: 3}
   m_PlayOnAwake: 1
@@ -2588,7 +2588,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2618,7 +2618,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.002
+      value: 0.967
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -3213,6 +3213,16 @@ PrefabInstance:
         type: 3}
       propertyPath: sound
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1822718157481153367, guid: 716bcf2d0aefd4c4089622af362284bf,
+        type: 3}
+      propertyPath: jumpsound
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668070611202048028, guid: 716bcf2d0aefd4c4089622af362284bf,
+        type: 3}
+      propertyPath: jumpsound
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 716bcf2d0aefd4c4089622af362284bf, type: 3}
