@@ -22,7 +22,7 @@ public class ThrowParabola : MonoBehaviour
 
     Coroutine throwCo =null;
 
-    public float throwSpeed = 1;
+    public float throwSpeed = 5;
 
     
     void GetLine()
@@ -46,7 +46,7 @@ public class ThrowParabola : MonoBehaviour
 
     private void Start()
     {
-        Show(20);
+     //   Show(20);
     }
 
     public void ThrowObject(GameObject _go)
@@ -55,8 +55,10 @@ public class ThrowParabola : MonoBehaviour
         Rigidbody r = _go.GetComponent<Rigidbody>();
         r.isKinematic = true;
         r.useGravity = false;
-        lr.enabled = false;
-        _go.transform.DOLocalPath(GetTrajectory().ToArray(), throwSpeed).OnComplete(()=>
+        lr.gameObject.SetActive(false);
+        Vector3[] arr = GetTrajectory().ToArray();
+        _go.transform.position = arr[0];
+        _go.transform.DOLocalPath(arr, throwSpeed).OnComplete(()=>
         {
             r.isKinematic = false;
             r.useGravity = true;
@@ -65,14 +67,16 @@ public class ThrowParabola : MonoBehaviour
 
     public void Show(float _distance)
     {
+        lr.gameObject.SetActive( true);
         Vector3 marker = transform.position + transform.forward * _distance;
         Ray ray = new Ray(marker, -transform.up);
         if(Physics.Raycast(ray, out RaycastHit _hit, 50))
         {
-            Tb.position = _hit.point;
+            Tb.position = _hit.point+new Vector3(0,0.1f,0);
+
         }
         
-        distance += _distance;
+        distance = _distance;
         List<Vector3> p = GetTrajectory();       
     }
     
@@ -102,9 +106,18 @@ public class ThrowParabola : MonoBehaviour
             b = Tb.position;
 
             Tb.position = SetDistance(); 
-          
+          if(lr.gameObject.activeSelf)
             GetLine();
         }        
+
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            Show(20);
+        }
+        if(Input.GetKeyUp(KeyCode.C))
+        {
+            ThrowObject(thrown);
+        }
     }
     
 
