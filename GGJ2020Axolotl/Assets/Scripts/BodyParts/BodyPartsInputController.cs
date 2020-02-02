@@ -60,15 +60,10 @@ public class BodyPartsInputController : MonoBehaviour
         {
             // The current state is pressing arm
             _currentState = EInputState.PRESSING_ARM;
-        } else if (Input.GetKeyUp(_playerController.InputSystem.Arm)) // If we are releasing the arm button 
+        } 
+        else if (Input.GetKeyUp(_playerController.InputSystem.Arm)) // If we are releasing the arm button 
         {
-            if(_currentState == EInputState.PARABOLE)
-            {
-                StopRotating();
-            }
-            _pressingDuration = 0f;
-            _currentState = EInputState.NONE;
-            _associatedBody.Send(EBodyLimb.ARM);
+            StopRotating(EBodyLimb.ARM, _currentState == EInputState.PARABOLE);
         }
 
         if (Input.GetKeyDown(_playerController.InputSystem.Leg))
@@ -77,13 +72,7 @@ public class BodyPartsInputController : MonoBehaviour
         }
         else if (Input.GetKeyUp(_playerController.InputSystem.Leg))
         {
-            if (_currentState == EInputState.PARABOLE)
-            {
-                StopRotating();
-            }
-            _pressingDuration = 0f;
-            _currentState = EInputState.NONE;
-            _associatedBody.Send(EBodyLimb.LEG);
+            StopRotating(EBodyLimb.LEG, _currentState == EInputState.PARABOLE);
         }
     }
 
@@ -109,12 +98,21 @@ public class BodyPartsInputController : MonoBehaviour
         _playerController.Move = false;
     }
 
-    private void StopRotating()
+    private void StopRotating(EBodyLimb limbToSEnd, bool askParabole)
     {
         // Ask parabole to stop showing and to throw the object
         _currentState = EInputState.NONE;
+        _pressingDuration = 0f;
         _playerController.Move = true;
         _distance = DISTANCE_RESET_VALUE;
+        if (askParabole)
+        {
+            _parabola.ThrowObject();
+        }
+        else
+        {
+            _associatedBody.Send(limbToSEnd);
+        }
     }
 }
 

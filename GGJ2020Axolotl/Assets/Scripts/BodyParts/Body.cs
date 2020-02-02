@@ -34,9 +34,6 @@ public class Body : MonoBehaviour
     {
         if (NumberOfLimbs(part) > 0)
         {
-            // Make the list of body parts matching the value of part
-            BodyPartSlot availablePart = null;
-
             for (int i = 0; i < _bodyParts.Count; i++)
             {
                 var combination = BodyPartsHelper.GetPairFromInt(i);

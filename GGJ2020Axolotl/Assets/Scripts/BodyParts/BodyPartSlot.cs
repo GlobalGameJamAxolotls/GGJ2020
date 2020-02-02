@@ -2,6 +2,7 @@
 
 public class BodyPartSlot : MonoBehaviour
 {
+    [HideInInspector]
     public EAxolotl Axolotl;
 
     private MeshRenderer _associatedLimb;
