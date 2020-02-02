@@ -12,6 +12,6 @@ public class InputSystem : ScriptableObject
     public KeyCode Arm;
     public KeyCode Leg;
 
-    public string VerticalAxis;
-    public string HorizontalAxis;
+    public string VerticalAxis = "Vertical";
+    public string HorizontalAxis = "Horizontal";
 }
