@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class InitialiseBodyParts : MonoBehaviour
 {
-    [SerializeField] private Body _axo;
-    [SerializeField] private Body _lotl;
+    [SerializeField] private Body _angry;
+    [SerializeField] private Body _sad;
 
     private void Awake()
     {
-        _axo.TryRecieve(EBodyLimb.ARM, );
-        _axo.Recieve(_arm2);
-        _lotl.Recieve(_arm3);
-        _axo.Recieve(_arm4);
+        _angry.TryRecieve(EBodyLimb.ARM, EAxolotl.ANGRY);
+        _angry.TryRecieve(EBodyLimb.ARM, EAxolotl.ANGRY);
+        _angry.TryRecieve(EBodyLimb.LEG, EAxolotl.ANGRY);
 
-        _axo.Recieve(_leg1);
-        _lotl.Recieve(_leg2);
-        _lotl.Recieve(_leg3);
+        _sad.TryRecieve(EBodyLimb.ARM, EAxolotl.SAD);
+        _sad.TryRecieve(EBodyLimb.LEG, EAxolotl.SAD);
+        _sad.TryRecieve(EBodyLimb.LEG, EAxolotl.SAD);
 
     }
 }

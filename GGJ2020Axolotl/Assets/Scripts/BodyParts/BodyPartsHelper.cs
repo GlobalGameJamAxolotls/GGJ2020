@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 
 public static class BodyPartsHelper
 {
@@ -13,15 +14,20 @@ public static class BodyPartsHelper
         { new BodyPartCombinations(){ Limb = EBodyLimb.ARM, Side = EBodySide.HELD}, 5 }
     };
 
-    public static int GetIntFromPair(BodyPartCombinations pair)
+    public static int GetIntFromPair(EBodyLimb limb, EBodySide side)
     {
-        if (_combinationsToInt.ContainsKey(pair))
+        foreach(KeyValuePair<BodyPartCombinations, int> pair in _combinationsToInt)
         {
-            return _combinationsToInt[pair];
+            if(pair.Key.Limb == limb && pair.Key.Side == side)
+            {
+                return pair.Value;
+            }
         }
-        else
-        {
-            return -1;
-        }
+        return -1;
+    }
+
+    public static BodyPartCombinations GetPairFromInt(int position)
+    {
+        return _combinationsToInt.FirstOrDefault(x => x.Value == position).Key;
     }
 }

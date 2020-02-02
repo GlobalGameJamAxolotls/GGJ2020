@@ -4,7 +4,7 @@ using UnityEngine;
 public class Body : MonoBehaviour
 {
     [Tooltip("0: left arm - 1: right arm - 2: left leg - 3: right leg - 4: held arm - 5: held leg")]
-    private List<BodyPart> _bodyParts = new List<BodyPart>();
+    private List<BodyPartSlot> _bodyParts = new List<BodyPartSlot>();
 
     private int _numberOfLegs;
     private int _numberOfArms;
@@ -13,33 +13,20 @@ public class Body : MonoBehaviour
     [SerializeField]
     private Body _otherBody;
 
-    public BodyPart TryRecieve(EBodyLimb partSimplified, List<EBodySide> availableParts)
+    public bool TryRecieve(EBodyLimb partSimplified, EAxolotl color)
     {
         // if you have an available slot for the given part
-        foreach(BodyPart myBodyPart in _bodyParts)
+        for (int i = 0; i < _bodyParts.Count; i++)
         {
-            if(myBodyPart.Part == partSimplified && !myBodyPart.IsVisible)
+            var combination = BodyPartsHelper.GetPairFromInt(i);
+            if (combination.Limb == partSimplified && !_bodyParts[i].IsVisible)
             {
-                BodyPart matchingPart = BrowseMatchingPart(myBodyPart.Side);
-                if (matchingPart != EBodySide.NONE)
-                {
-                    return matchingPart;
-                }
+                // Instantiate body part with same axolotl as available part but with my side 
+                InstantiateBodyPart(partSimplified, combination.Side, color);
+                return true;
             }
         }
-        return null;
-
-        BodyPart BrowseMatchingPart(EBodySide side)
-        {
-            foreach(EBodySide availablePart in availableParts)
-            {
-                if(availablePart == side)
-                {
-                    return myB;
-                }
-            }
-            return EBodySide.NONE;
-        }
+        return false;
     }
 
     public void Send(EBodyLimb part)
@@ -47,47 +34,35 @@ public class Body : MonoBehaviour
         if (NumberOfLimbs(part) > 0)
         {
             // Make the list of body parts matching the value of part
-            List<EBodySide> availableSides = new List<EBodySide>();
-            foreach (BodyPart bodyPart in _bodyParts)
-            {
-                if (bodyPart.Part == part)
-                {
-                    availableSides.Add(bodyPart.Side);
-                }
-            }
-            // Try to send it
-            EBodySide chosenSide = _otherBody.TryRecieve(part, availableSides);
-            if(chosenSide != EBodySide.NONE)
-            {
+            BodyPartSlot availablePart = null;
 
+            for (int i = 0; i < _bodyParts.Count; i++)
+            {
+                var combination = BodyPartsHelper.GetPairFromInt(i);
+                if (combination.Limb == part && _bodyParts[i].IsVisible)
+                {
+                    if(_otherBody.TryRecieve(combination.Limb, _bodyParts[i].Axolotl))
+                    {
+                        RemoveBodyPart(combination.Limb, combination.Side);
+                        break;
+                    }
+                }
             }
             // If the result is different from null then break the reference in the 
         }
     }
 
-    private void AddBodyPart(BodyPart part)
+    private void InstantiateBodyPart(EBodyLimb limb, EBodySide side, EAxolotl color)
     {
-        _bodyParts.Add(part);
-        ModifyNumberOfParts(part.Part, 1);
+        ModifyNumberOfParts(limb, 1);
+
+        _bodyParts[BodyPartsHelper.GetIntFromPair(limb, side)].CreateGameObject(limb, side, color);
     }
 
-    private void RemoveBodyPart(BodyPart toRemove)
+    private void RemoveBodyPart(EBodyLimb limb, EBodySide side)
     {
-        ModifyNumberOfParts(toRemove.Part, -1);
-        _bodyParts.Remove(toRemove);
-    }
-
-    private BodyPart GetFirstBodyPartOfType(EBodyLimb toRemove)
-    {
-        foreach (BodyPart part in _bodyParts)
-        {
-            if (part.Part == toRemove)
-            {
-                return part;
-            }
-        }
-        Debug.Log("Couldnt find body part. Returning null");
-        return null;
+        ModifyNumberOfParts(limb, -1);
+        _bodyParts[BodyPartsHelper.GetIntFromPair(limb, side)].DestroyGameObject();
     }
 
     private void ModifyNumberOfParts(EBodyLimb partType, int modifier)
