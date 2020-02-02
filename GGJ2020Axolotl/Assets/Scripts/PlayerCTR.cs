@@ -77,7 +77,7 @@ public class PlayerCTR : MonoBehaviour
 
     void Movement()
     {
-        transform.Translate(_target * movementSpeed * Time.deltaTime, Space.World);
+        transform.Translate(_target * movementSpeed * Time.deltaTime, Space.Self);
     }
 
     private void Rotation()
