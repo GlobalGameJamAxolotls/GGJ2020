@@ -1229,7 +1229,7 @@ GameObject:
   - component: {fileID: 1822718157481153365}
   - component: {fileID: 1822718157481153366}
   m_Layer: 0
-  m_Name: AXO
+  m_Name: Angry
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1296,7 +1296,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1822718157481153364
 CapsuleCollider:
@@ -1326,6 +1326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputSystem: {fileID: 11400000, guid: a7879199076d15c438d29b7780b2e154, type: 2}
   _target: {x: 0, y: 0, z: 0}
+  sound: 0
   Move: 0
 --- !u!114 &1822718157481153365
 MonoBehaviour:
@@ -1909,7 +1910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1390550577735434763
 Transform:
   m_ObjectHideFlags: 0
@@ -2053,7 +2054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &9166987396717953468
 Transform:
   m_ObjectHideFlags: 0
@@ -2509,7 +2510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1568204870322890127
 Transform:
   m_ObjectHideFlags: 0
@@ -2621,7 +2622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7425121917733628581
 Transform:
   m_ObjectHideFlags: 0
@@ -3300,7 +3301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3295868010866768949
 Transform:
   m_ObjectHideFlags: 0
@@ -3478,7 +3479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &534287910362386520
 Transform:
   m_ObjectHideFlags: 0
@@ -3710,7 +3711,7 @@ GameObject:
   - component: {fileID: 7668070611202048025}
   - component: {fileID: 7668070611202048026}
   m_Layer: 0
-  m_Name: LOTL
+  m_Name: Sad
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3807,6 +3808,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InputSystem: {fileID: 11400000, guid: 73382c2841704854a907f3f036835332, type: 2}
   _target: {x: 0, y: 0, z: 0}
+  sound: 0
   Move: 0
 --- !u!114 &7668070611202048025
 MonoBehaviour:
@@ -4402,6 +4404,7 @@ GameObject:
   - component: {fileID: 8022048340234912701}
   - component: {fileID: 5619825631015420731}
   - component: {fileID: 8022048340234912707}
+  - component: {fileID: 422452827}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4457,6 +4460,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PickableLimbPrefab: {fileID: 1205005223923303689, guid: e11c19575a5fa4b038c947dc574e185d,
     type: 3}
+  _angryPrefabs: []
+  _sadPrefabs: []
+--- !u!114 &422452827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8022048340234912706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dfff5f3fa6c5bb4097086aad37beab0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _angry: {fileID: 1822718157481153365}
+  _sad: {fileID: 7668070611202048025}
 --- !u!1 &8509306580353276718
 GameObject:
   m_ObjectHideFlags: 0
@@ -4634,7 +4653,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5002215180763280727
 Transform:
   m_ObjectHideFlags: 0
@@ -4776,7 +4795,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6531720285523180260
 Transform:
   m_ObjectHideFlags: 0

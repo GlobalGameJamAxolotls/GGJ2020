@@ -36,12 +36,12 @@ public class BodyPartsInputController : MonoBehaviour
 
         if (_currentState == EInputState.PARABOLE)
         {
-            if (Input.GetKeyDown(_playerController.InputSystem.Up))
+            if (Input.GetKey(_playerController.InputSystem.Up))
             {
                 _distance += _speedDistance * Time.deltaTime;
                 _parabola.Show(_distance);
             }
-            else if (Input.GetKeyDown(_playerController.InputSystem.Down))
+            else if (Input.GetKey(_playerController.InputSystem.Down))
             {
                 _distance -= _speedDistance * Time.deltaTime;
                 _parabola.Show(_distance);
