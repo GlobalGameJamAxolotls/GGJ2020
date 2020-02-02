@@ -21,8 +21,7 @@ public class PlayerCTR : MonoBehaviour
     [HideInInspector]
     public bool Move;
 
-    private bool _pressedSomething;
-
+    private bool _pressedSomething;    
 
     Animator anim;
 
