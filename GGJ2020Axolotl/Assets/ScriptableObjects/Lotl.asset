@@ -16,5 +16,8 @@ MonoBehaviour:
   Down: 274
   Left: 276
   Right: 275
+  Jump: 32
   Arm: 257
   Leg: 258
+  VerticalAxis: Vertical
+  HorizontalAxis: Horizontal

@@ -79,7 +79,7 @@ public class PlayerCTR : MonoBehaviour
 
     void Movement()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal"); float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxis(InputSystem.HorizontalAxis); float moveVertical = Input.GetAxis(InputSystem.VerticalAxis);
         Vector3 move = new Vector3(moveHorizontal, 0, moveVertical);
         anim?.SetBool("Walking", move != Vector3.zero);
 
@@ -112,7 +112,7 @@ public class PlayerCTR : MonoBehaviour
 
     void Jump()
     {
-        if(Input.GetKey(KeyCode.Space) && _isjumping == false) 
+        if(Input.GetKey(InputSystem.Jump) && _isjumping == false) 
         {
             rb.AddForce(new Vector3(0, jumpForce, 0),ForceMode.Impulse);
             _isjumping = true;
