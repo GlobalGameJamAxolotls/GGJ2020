@@ -14,15 +14,21 @@ public class PlayerCTR1 : MonoBehaviour
     private float jumpForce;
     private Rigidbody rb;
     public bool isjumping;
+    private Animator anim;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         isjumping = false;
+        anim = GetComponent<Animator>();
     }
     void Update()
     {
         Movement();
         Jump();
+        if (!Input.anyKey)
+        {
+            anim.SetBool("Walking", false);
+        }
     }
 
 
@@ -39,9 +45,11 @@ public class PlayerCTR1 : MonoBehaviour
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement.normalized), 0.2f);
             }
+            
 
 
             transform.Translate(movement * movementSpeed * Time.deltaTime, Space.World);
+            anim.SetBool("Walking",true);
 
         }
     }
@@ -49,6 +57,7 @@ public class PlayerCTR1 : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.KeypadEnter) && isjumping == false) 
         {
+            anim.SetBool("Walking", false);
             rb.AddForce(new Vector3(0, jumpForce, 0),ForceMode.Impulse);
             isjumping = true;
         }            
