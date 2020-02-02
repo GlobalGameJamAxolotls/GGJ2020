@@ -74,6 +74,11 @@ public class BookcasePuzzle : MonoBehaviour
     {
         Debug.Log("Solved");
         transform.DOMoveY(10, 1.5f);
-        Camera.main.DOShakePosition(1.5f);
+        Camera.main.DOShakePosition(1.5f).OnComplete(MyFunction);
+    }
+
+    private void MyFunction()
+    {
+        
     }
 }
