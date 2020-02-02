@@ -24,7 +24,8 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-    rigImportErrors: 
+    rigImportErrors: "Invalid Avatar Rig Configuration. Missing or invalid transform:\n\tRequired
+      human bone 'LeftFoot' not found\n"
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
@@ -32,7 +33,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -169,7 +170,217 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: riggedaxo(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Armature
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 4.269685, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+      scale: {x: 2.8311021, y: 2.8311021, z: 2.8311021}
+    - name: Bone
+      parentName: Armature
+      position: {x: -0, y: -0.36162764, z: 0}
+      rotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
+      scale: {x: 0.99999905, y: 0.99999547, z: 0.99999547}
+    - name: Bone.001
+      parentName: Bone
+      position: {x: -0, y: 1, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 1.0000001, y: 0.9999996, z: 0.9999996}
+    - name: Bone.002
+      parentName: Bone.001
+      position: {x: -0, y: 0.49834037, z: 0}
+      rotation: {x: -0, y: -0, z: -0, w: 1}
+      scale: {x: 0.99999964, y: 1.0000001, z: 1.0000001}
+    - name: Bone.002_end
+      parentName: Bone.002
+      position: {x: -0, y: 1.6261628, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.003
+      parentName: Bone.001
+      position: {x: -0, y: 0.49834037, z: 0}
+      rotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+      scale: {x: 1.0000007, y: 0.99999994, z: 1.0000007}
+    - name: Bone.004
+      parentName: Bone.003
+      position: {x: 0.000000005889895, y: 0.9890141, z: -0.000000015807245}
+      rotation: {x: -0, y: -0, z: -0, w: -1}
+      scale: {x: 1, y: 1.0000006, z: 1}
+    - name: Bone.004_end
+      parentName: Bone.004
+      position: {x: -0, y: 1.1303018, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.005
+      parentName: Bone.001
+      position: {x: -0, y: 0.49834037, z: 0}
+      rotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+      scale: {x: 1.0000007, y: 0.99999994, z: 1.0000007}
+    - name: Bone.006
+      parentName: Bone.005
+      position: {x: -0.000000005889895, y: 0.9890141, z: -0.000000015807245}
+      rotation: {x: 0.011600092, y: -0.000000014901161, z: 0.000000044703484, w: -0.99993277}
+      scale: {x: 1.0000029, y: 1.0000067, z: 1.0000085}
+    - name: Bone.006_end
+      parentName: Bone.006
+      position: {x: -0, y: 1.1306062, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.007
+      parentName: Armature
+      position: {x: -0, y: -0.36162764, z: 0}
+      rotation: {x: -0.00000005960465, y: -0.00000005960465, z: 0.7071068, w: -0.7071068}
+      scale: {x: 0.99999964, y: 1.0000011, z: 0.9999971}
+    - name: Bone.009
+      parentName: Bone.007
+      position: {x: -0, y: 0.6357947, z: 0}
+      rotation: {x: -0.43231302, y: -0.55955833, z: 0.43231302, w: 0.55955833}
+      scale: {x: 1.0000021, y: 1.0000131, z: 1.00002}
+    - name: Bone.011
+      parentName: Bone.009
+      position: {x: -0.000000047031758, y: 0.8395927, z: 0.0000000029108316}
+      rotation: {x: 0.000000014901159, y: -0, z: -0.033278015, w: 0.99944615}
+      scale: {x: 1.0000021, y: 0.99999857, z: 0.9999948}
+    - name: Bone.011_end
+      parentName: Bone.011
+      position: {x: -0, y: 0.44679102, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.008
+      parentName: Armature
+      position: {x: -0, y: -0.36162764, z: 0}
+      rotation: {x: 0.00000005960465, y: -0.00000005960465, z: 0.7071068, w: 0.7071068}
+      scale: {x: 0.99999964, y: 1.0000011, z: 0.9999971}
+    - name: Bone.010
+      parentName: Bone.008
+      position: {x: -0, y: 0.6357947, z: 0}
+      rotation: {x: 0.43231302, y: -0.55955833, z: 0.43231302, w: -0.55955833}
+      scale: {x: 1.0000024, y: 1.0000126, z: 1.0000204}
+    - name: Bone.012
+      parentName: Bone.010
+      position: {x: 0.000000044703484, y: 0.83959275, z: -0.000000039674255}
+      rotation: {x: 0.000000014901159, y: -0, z: 0.033278015, w: 0.99944615}
+      scale: {x: 1.0000024, y: 0.99999803, z: 0.9999938}
+    - name: Bone.012_end
+      parentName: Bone.012
+      position: {x: -0, y: 0.44679102, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bone.013
+      parentName: Armature
+      position: {x: -0, y: -0.36162764, z: 0}
+      rotation: {x: 0.17842498, y: -0, z: -0, w: 0.98395354}
+      scale: {x: 0.99999905, y: 0.99999845, z: 0.99999845}
+    - name: Bone.014
+      parentName: Bone.013
+      position: {x: -0, y: 0.7843356, z: 0.000000014901161}
+      rotation: {x: -0.2924108, y: -0, z: -0, w: 0.9562928}
+      scale: {x: 1.0000001, y: 1.0000024, z: 1.0000024}
+    - name: Bone.015
+      parentName: Bone.014
+      position: {x: 0.000000010687328, y: 0.6202623, z: -0.0000000081490725}
+      rotation: {x: 0.30278614, y: -0, z: -0, w: 0.95305854}
+      scale: {x: 0.99999976, y: 1.0000038, z: 1.0000038}
+    - name: Bone.015_end
+      parentName: Bone.015
+      position: {x: -0, y: 0.7768445, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: AXO_01
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ANGRY_BROW_L
+      parentName: riggedaxo(Clone)
+      position: {x: 7.664378, y: 0, z: 0}
+      rotation: {x: 1, y: 0, z: 0, w: -0.0000000754979}
+      scale: {x: -1, y: -1, z: -1}
+    - name: ANGRY_BROW_R
+      parentName: riggedaxo(Clone)
+      position: {x: -7.6643796, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EYELID_L
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EYEBALL_L
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EYELID_R
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EYEBALL_R
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: AXO_ANGRY_BODY.001
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: ANGRY_BROW
+      parentName: AXO_ANGRY_BODY.001
+      position: {x: -7.664379, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: EYEBALL_ANGRY
+      parentName: AXO_ANGRY_BODY.001
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: AXO_ANGRY_HAND_L
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: AXO_ANGRY_BODY.002
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: AXO_ANGRY_HAND_R
+      parentName: riggedaxo(Clone)
+      position: {x: -7.6630883, y: -0.08719492, z: 0.11039756}
+      rotation: {x: -0.013091545, y: 0.007127203, z: 0.005782368, w: 0.9998722}
+      scale: {x: 0.99999994, y: 0.9999998, z: 1}
+    - name: AXO_ANGRY_BODY.003
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.013091544, y: 0.007127201, z: 0.0057823686, w: 0.9998722}
+      scale: {x: 0.99999994, y: 0.9999998, z: 1}
+    - name: AXO_ANGRY_LEG_L.001
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: AXO_ANGRY_BODY.004
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: AXO_ANGRY_LEG_R
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: AXO_ANGRY_BODY.005
+      parentName: riggedaxo(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -180,7 +391,7 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   animationType: 2
