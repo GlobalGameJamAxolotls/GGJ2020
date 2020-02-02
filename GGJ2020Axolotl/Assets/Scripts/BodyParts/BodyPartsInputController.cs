@@ -105,14 +105,7 @@ public class BodyPartsInputController : MonoBehaviour
         _pressingDuration = 0f;
         _playerController.Move = true;
         _distance = DISTANCE_RESET_VALUE;
-        if (askParabole)
-        {
-            _parabola.ThrowObject();
-        }
-        else
-        {
-            _associatedBody.Send(limbToSEnd);
-        }
+        _associatedBody.Send(limbToSEnd, askParabole ? _parabola : null);
     }
 }
 

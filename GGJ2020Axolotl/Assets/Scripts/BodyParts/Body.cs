@@ -30,7 +30,7 @@ public class Body : MonoBehaviour
         return false;
     }
 
-    public void Send(EBodyLimb part)
+    public void Send(EBodyLimb part, ThrowParabola parabola = null)
     {
         if (NumberOfLimbs(part) > 0)
         {
@@ -39,14 +39,19 @@ public class Body : MonoBehaviour
                 var combination = BodyPartsHelper.GetPairFromInt(i);
                 if (combination.Limb == part && _bodyParts[i].IsVisible)
                 {
-                    if(_otherBody.TryRecieve(combination.Limb, _bodyParts[i].Axolotl))
+                    if (parabola != null)
                     {
+                        parabola.ThrowObject(Instantiate(BodyPartsPrefabsHolder.Instance.PickableLimbPrefab).GetComponent<PickableBodyPart>().Initialise(combination.Limb, combination.Side, _bodyParts[BodyPartsHelper.GetIntFromPair(combination.Limb, combination.Side)].Axolotl));
                         RemoveBodyPart(combination.Limb, combination.Side);
                         break;
                     }
+
+                    if (_otherBody.TryRecieve(combination.Limb, _bodyParts[i].Axolotl))
+                    {
+                        RemoveBodyPart(combination.Limb, combination.Side);
+                    }
                 }
             }
-            // If the result is different from null then break the reference in the 
         }
     }
 
