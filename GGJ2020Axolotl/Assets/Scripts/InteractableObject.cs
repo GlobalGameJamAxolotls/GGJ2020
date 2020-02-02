@@ -5,10 +5,9 @@ using UnityEngine;
 
 public abstract class InteractableObject : MonoBehaviour
 {
-    public Animation ani;
     public event Action<GameObject> Interacted;
 
-    protected bool interactable = true;
+   public bool interactable = true;
 
     public bool Interactable => interactable;
 
@@ -25,7 +24,7 @@ public abstract class InteractableObject : MonoBehaviour
 
     protected virtual void Interaction(GameObject _go)
     {
-        //do something
+        
     }
 
 
