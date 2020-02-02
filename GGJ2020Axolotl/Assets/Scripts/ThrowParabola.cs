@@ -47,6 +47,7 @@ public class ThrowParabola : MonoBehaviour
     private void Start()
     {
      //   Show(20);
+
     }
 
     public void ThrowObject(GameObject _go)
